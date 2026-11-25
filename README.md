@@ -1,4 +1,4 @@
-# ⚡ Nexus Pay — Next-Gen 3D Digital Wallet & Payment App
+# ⚡ Digital Wallet & Payment App
 
 <div align="center">
 
