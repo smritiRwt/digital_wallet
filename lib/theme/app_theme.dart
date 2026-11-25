@@ -6,11 +6,12 @@ class AppTheme {
   static bool useGoogleFonts = true;
 
   static ThemeData get darkTheme {
-    final textTheme = ThemeData.dark().textTheme;
+    final textTheme = ThemeData.dark().textTheme.apply(fontFamily: 'Outfit');
 
     return ThemeData(
       brightness: Brightness.dark,
       scaffoldBackgroundColor: AppColors.background,
+      fontFamily: 'Outfit',
       primaryColor: AppColors.electricPurple,
       colorScheme: const ColorScheme.dark(
         primary: AppColors.electricPurple,

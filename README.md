@@ -167,9 +167,3 @@ flutter analyze
 - **[Google Fonts (Outfit)](https://pub.dev/packages/google_fonts)** — Modern geometric typography.
 - **[Intl](https://pub.dev/packages/intl)** — Currency and date/time formatting.
 - **Custom Vector Graphics & Matrix Transforms** — Handcrafted 3D perspective transforms and `CustomPainter` renderers.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:digital_wallet_demo/main.dart';
 import 'package:digital_wallet_demo/screens/cards_studio_screen.dart';
@@ -12,9 +13,30 @@ import 'package:digital_wallet_demo/theme/app_theme.dart';
 import 'package:digital_wallet_demo/widgets/background/ambient_mesh_background.dart';
 
 void main() {
-  setUp(() {
+  setUpAll(() async {
     TestWidgetsFlutterBinding.ensureInitialized();
     AppTheme.useGoogleFonts = false;
+
+    // Load real MaterialIcons font
+    final iconFile = File('assets/fonts/MaterialIcons-Regular.otf');
+    if (iconFile.existsSync()) {
+      final iconBytes = iconFile.readAsBytesSync();
+      final iconLoader = FontLoader('MaterialIcons');
+      iconLoader.addFont(Future.value(ByteData.view(iconBytes.buffer)));
+      await iconLoader.load();
+    }
+
+    // Load real Outfit font and map to font families
+    final outfitFile = File('assets/fonts/Outfit-VariableFont_wght.ttf');
+    if (outfitFile.existsSync()) {
+      final outfitBytes = outfitFile.readAsBytesSync();
+
+      for (final family in ['Outfit', 'Roboto', '.SF Pro Text', '.SF UI Text', 'monospace']) {
+        final loader = FontLoader(family);
+        loader.addFont(Future.value(ByteData.view(outfitBytes.buffer)));
+        await loader.load();
+      }
+    }
   });
 
   Future<void> captureWidget({
