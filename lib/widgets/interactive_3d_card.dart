@@ -1,7 +1,9 @@
 import 'dart:math' as math;
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../models/wallet_card.dart';
 import '../theme/app_colors.dart';
 import 'emv_chip.dart';
@@ -63,10 +65,7 @@ class _Interactive3DCardState extends State<Interactive3DCard>
     );
 
     _flipAnimation = Tween<double>(begin: 0.0, end: math.pi).animate(
-      CurvedAnimation(
-        parent: _flipController,
-        curve: Curves.easeInOutBack,
-      ),
+      CurvedAnimation(parent: _flipController, curve: Curves.easeInOutBack),
     );
   }
 
@@ -94,16 +93,10 @@ class _Interactive3DCardState extends State<Interactive3DCard>
   void _onPanEnd(DragEndDetails details) {
     // Spring back to resting state
     _tiltXAnim = Tween<double>(begin: _tiltX, end: 0.0).animate(
-      CurvedAnimation(
-        parent: _springBackController,
-        curve: Curves.easeOutBack,
-      ),
+      CurvedAnimation(parent: _springBackController, curve: Curves.easeOutBack),
     );
     _tiltYAnim = Tween<double>(begin: _tiltY, end: 0.0).animate(
-      CurvedAnimation(
-        parent: _springBackController,
-        curve: Curves.easeOutBack,
-      ),
+      CurvedAnimation(parent: _springBackController, curve: Curves.easeOutBack),
     );
 
     _springBackController.forward(from: 0.0).then((_) {
@@ -131,11 +124,18 @@ class _Interactive3DCardState extends State<Interactive3DCard>
       SnackBar(
         content: Row(
           children: [
-            const Icon(Icons.check_circle_rounded, color: AppColors.neonEmerald, size: 18),
+            const Icon(
+              Icons.check_circle_rounded,
+              color: AppColors.neonEmerald,
+              size: 18,
+            ),
             const SizedBox(width: 8),
             Text(
               'Card number copied to clipboard',
-              style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
             ),
           ],
         ),
@@ -143,7 +143,9 @@ class _Interactive3DCardState extends State<Interactive3DCard>
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: widget.card.accentColor.withValues(alpha: 0.4)),
+          side: BorderSide(
+            color: widget.card.accentColor.withValues(alpha: 0.4),
+          ),
         ),
         duration: const Duration(seconds: 2),
       ),
@@ -159,8 +161,12 @@ class _Interactive3DCardState extends State<Interactive3DCard>
     return AnimatedBuilder(
       animation: Listenable.merge([_springBackController, _flipController]),
       builder: (context, child) {
-        final currentTiltX = _springBackController.isAnimating ? _tiltXAnim.value : _tiltX;
-        final currentTiltY = _springBackController.isAnimating ? _tiltYAnim.value : _tiltY;
+        final currentTiltX = _springBackController.isAnimating
+            ? _tiltXAnim.value
+            : _tiltX;
+        final currentTiltY = _springBackController.isAnimating
+            ? _tiltYAnim.value
+            : _tiltY;
         final flipVal = _flipAnimation.value;
 
         // Is back side currently showing?
@@ -192,11 +198,16 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                       BoxShadow(
                         color: Colors.black.withValues(alpha: 0.6),
                         blurRadius: 28,
-                        offset: Offset(currentTiltY * 25, 14 + currentTiltX * 15),
+                        offset: Offset(
+                          currentTiltY * 25,
+                          14 + currentTiltX * 15,
+                        ),
                       ),
                       if (widget.isSelected && !widget.card.isFrozen)
                         BoxShadow(
-                          color: widget.card.accentColor.withValues(alpha: 0.38),
+                          color: widget.card.accentColor.withValues(
+                            alpha: 0.38,
+                          ),
                           blurRadius: 26,
                           spreadRadius: 1,
                         ),
@@ -214,7 +225,11 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: widget.card.isFrozen
-                              ? const [Color(0xFF1E293B), Color(0xFF0F172A), Color(0xFF164E63)]
+                              ? const [
+                                  Color(0xFF1E293B),
+                                  Color(0xFF0F172A),
+                                  Color(0xFF164E63),
+                                ]
                               : widget.card.gradientColors,
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -223,8 +238,10 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                           color: widget.card.isFrozen
                               ? const Color(0xFF38BDF8).withValues(alpha: 0.6)
                               : (widget.isSelected
-                                  ? widget.card.accentColor.withValues(alpha: 0.65)
-                                  : Colors.white.withValues(alpha: 0.15)),
+                                    ? widget.card.accentColor.withValues(
+                                        alpha: 0.65,
+                                      )
+                                    : Colors.white.withValues(alpha: 0.15)),
                           width: widget.isSelected ? 1.5 : 1.0,
                         ),
                       ),
@@ -258,11 +275,16 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                   child: GestureDetector(
                     onTap: _toggleFlip,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.black.withValues(alpha: 0.35),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.2),
+                        ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -347,12 +369,16 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                       ],
                     ),
                     child: const Center(
-                      child: Icon(Icons.bolt_rounded, color: Colors.white, size: 15),
+                      child: Icon(
+                        Icons.bolt_rounded,
+                        color: Colors.white,
+                        size: 15,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    'NEXUS',
+                    'ABC',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 13,
@@ -379,7 +405,10 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                   ),
                   const SizedBox(width: 4),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(6),
@@ -454,7 +483,9 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                   const SizedBox(width: 8),
                   Icon(
                     _justCopied ? Icons.check_rounded : Icons.copy_rounded,
-                    color: _justCopied ? AppColors.neonEmerald : Colors.white.withValues(alpha: 0.4),
+                    color: _justCopied
+                        ? AppColors.neonEmerald
+                        : Colors.white.withValues(alpha: 0.4),
                     size: 14,
                   ),
                 ],
@@ -552,7 +583,9 @@ class _Interactive3DCardState extends State<Interactive3DCard>
               (index) => Expanded(
                 child: Container(
                   height: 1,
-                  color: Colors.white.withValues(alpha: index.isEven ? 0.04 : 0.0),
+                  color: Colors.white.withValues(
+                    alpha: index.isEven ? 0.04 : 0.0,
+                  ),
                 ),
               ),
             ),
@@ -601,7 +634,9 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.95),
                     borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: widget.card.accentColor.withValues(alpha: 0.5)),
+                    border: Border.all(
+                      color: widget.card.accentColor.withValues(alpha: 0.5),
+                    ),
                   ),
                   child: Row(
                     children: [
@@ -616,7 +651,9 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                       ),
                       const SizedBox(width: 4),
                       Icon(
-                        _showCvv ? Icons.visibility_off_rounded : Icons.visibility_rounded,
+                        _showCvv
+                            ? Icons.visibility_off_rounded
+                            : Icons.visibility_rounded,
                         size: 13,
                         color: Colors.black54,
                       ),
@@ -639,7 +676,7 @@ class _Interactive3DCardState extends State<Interactive3DCard>
             children: [
               Expanded(
                 child: Text(
-                  'Issued by Nexus Digital Bank under license. For customer care: +1-800-NEXUS-PAY. 24/7 Quantum Fraud Shield Active.',
+                  'Issued by Nexus Digital Bank under license. For customer care: +1-800-PAY. 24/7 Quantum Fraud Shield Active.',
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.45),
                     fontSize: 7.5,
@@ -655,7 +692,11 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
                   gradient: const LinearGradient(
-                    colors: [Color(0xFFE2E8F0), Color(0xFF94A3B8), Color(0xFFCBD5E1)],
+                    colors: [
+                      Color(0xFFE2E8F0),
+                      Color(0xFF94A3B8),
+                      Color(0xFFCBD5E1),
+                    ],
                   ),
                 ),
                 child: const Center(
@@ -693,11 +734,17 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                 ),
                 Center(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.black.withValues(alpha: 0.65),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: const Color(0xFF38BDF8), width: 1.2),
+                      border: Border.all(
+                        color: const Color(0xFF38BDF8),
+                        width: 1.2,
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: const Color(0xFF38BDF8).withValues(alpha: 0.4),
@@ -708,7 +755,11 @@ class _Interactive3DCardState extends State<Interactive3DCard>
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.ac_unit_rounded, color: Color(0xFF38BDF8), size: 18),
+                        Icon(
+                          Icons.ac_unit_rounded,
+                          color: Color(0xFF38BDF8),
+                          size: 18,
+                        ),
                         SizedBox(width: 6),
                         Text(
                           'CARD FROZEN',
@@ -810,11 +861,23 @@ class _FrostPainter extends CustomPainter {
     canvas.drawLine(const Offset(0, 15), const Offset(30, 45), paint);
 
     canvas.drawLine(Offset(size.width, 0), Offset(size.width - 45, 45), paint);
-    canvas.drawLine(Offset(size.width - 15, 0), Offset(size.width - 45, 30), paint);
+    canvas.drawLine(
+      Offset(size.width - 15, 0),
+      Offset(size.width - 45, 30),
+      paint,
+    );
     canvas.drawLine(Offset(size.width, 15), Offset(size.width - 30, 45), paint);
 
-    canvas.drawLine(Offset(0, size.height), Offset(45, size.height - 45), paint);
-    canvas.drawLine(Offset(size.width, size.height), Offset(size.width - 45, size.height - 45), paint);
+    canvas.drawLine(
+      Offset(0, size.height),
+      Offset(45, size.height - 45),
+      paint,
+    );
+    canvas.drawLine(
+      Offset(size.width, size.height),
+      Offset(size.width - 45, size.height - 45),
+      paint,
+    );
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../theme/app_colors.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/neon_button.dart';
@@ -21,7 +22,7 @@ class ReceiveMoneyModal extends StatefulWidget {
 }
 
 class _ReceiveMoneyModalState extends State<ReceiveMoneyModal> {
-  final String _upiAddress = 'alexander.vane@nexuspay';
+  final String _upiAddress = 'test.vane@nexuspay';
   bool _copied = false;
 
   void _copyAddress() {
@@ -76,7 +77,10 @@ class _ReceiveMoneyModalState extends State<ReceiveMoneyModal> {
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.close_rounded, color: AppColors.textSecondary),
+                icon: const Icon(
+                  Icons.close_rounded,
+                  color: AppColors.textSecondary,
+                ),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ],
@@ -132,15 +136,22 @@ class _ReceiveMoneyModalState extends State<ReceiveMoneyModal> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
               children: [
-                const Icon(Icons.qr_code_scanner_rounded, color: AppColors.neonCyan, size: 20),
+                const Icon(
+                  Icons.qr_code_scanner_rounded,
+                  color: AppColors.neonCyan,
+                  size: 20,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Nexus Pay ID',
-                        style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
+                        'Pay ID',
+                        style: TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 11,
+                        ),
                       ),
                       Text(
                         _upiAddress,
@@ -157,14 +168,19 @@ class _ReceiveMoneyModalState extends State<ReceiveMoneyModal> {
                 GestureDetector(
                   onTap: _copyAddress,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: _copied
                           ? AppColors.neonEmerald.withValues(alpha: 0.2)
                           : AppColors.vividViolet.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                        color: _copied ? AppColors.neonEmerald : AppColors.vividViolet,
+                        color: _copied
+                            ? AppColors.neonEmerald
+                            : AppColors.vividViolet,
                       ),
                     ),
                     child: Row(
@@ -172,13 +188,17 @@ class _ReceiveMoneyModalState extends State<ReceiveMoneyModal> {
                         Icon(
                           _copied ? Icons.check_rounded : Icons.copy_rounded,
                           size: 14,
-                          color: _copied ? AppColors.neonEmerald : AppColors.vividViolet,
+                          color: _copied
+                              ? AppColors.neonEmerald
+                              : AppColors.vividViolet,
                         ),
                         const SizedBox(width: 4),
                         Text(
                           _copied ? 'Copied' : 'Copy',
                           style: TextStyle(
-                            color: _copied ? AppColors.neonEmerald : AppColors.vividViolet,
+                            color: _copied
+                                ? AppColors.neonEmerald
+                                : AppColors.vividViolet,
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
                           ),
@@ -227,23 +247,40 @@ class _QrCodePainter extends CustomPainter {
     for (int r = 0; r < rows; r++) {
       for (int c = 0; c < cols; c++) {
         // Corner markers
-        final isCorner = (r < 8 && c < 8) || (r < 8 && c >= cols - 8) || (r >= rows - 8 && c < 8);
+        final isCorner =
+            (r < 8 && c < 8) ||
+            (r < 8 && c >= cols - 8) ||
+            (r >= rows - 8 && c < 8);
         final isCenter = (r >= 11 && r <= 17 && c >= 11 && c <= 17);
 
         if (isCenter) continue;
 
         if (isCorner) {
-          final isBorder = (r == 0 || r == 6 || c == 0 || c == 6) && (r <= 6 && c <= 6);
-          final isTopRightBorder = (r == 0 || r == 6 || c == cols - 7 || c == cols - 1) && (r <= 6 && c >= cols - 7);
-          final isBottomLeftBorder = (r == rows - 7 || r == rows - 1 || c == 0 || c == 6) && (r >= rows - 7 && c <= 6);
+          final isBorder =
+              (r == 0 || r == 6 || c == 0 || c == 6) && (r <= 6 && c <= 6);
+          final isTopRightBorder =
+              (r == 0 || r == 6 || c == cols - 7 || c == cols - 1) &&
+              (r <= 6 && c >= cols - 7);
+          final isBottomLeftBorder =
+              (r == rows - 7 || r == rows - 1 || c == 0 || c == 6) &&
+              (r >= rows - 7 && c <= 6);
 
-          final isInnerDot = (r >= 2 && r <= 4 && c >= 2 && c <= 4) ||
+          final isInnerDot =
+              (r >= 2 && r <= 4 && c >= 2 && c <= 4) ||
               (r >= 2 && r <= 4 && c >= cols - 5 && c <= cols - 3) ||
               (r >= rows - 5 && r <= rows - 3 && c >= 2 && c <= 4);
 
-          if (isBorder || isTopRightBorder || isBottomLeftBorder || isInnerDot) {
+          if (isBorder ||
+              isTopRightBorder ||
+              isBottomLeftBorder ||
+              isInnerDot) {
             canvas.drawRect(
-              Rect.fromLTWH(c * blockSize, r * blockSize, blockSize - 0.5, blockSize - 0.5),
+              Rect.fromLTWH(
+                c * blockSize,
+                r * blockSize,
+                blockSize - 0.5,
+                blockSize - 0.5,
+              ),
               paint,
             );
           }
@@ -251,7 +288,12 @@ class _QrCodePainter extends CustomPainter {
           // Synthetic pseudo random QR pattern
           if ((r * 7 + c * 13 + (r * c)) % 3 == 0) {
             canvas.drawRect(
-              Rect.fromLTWH(c * blockSize, r * blockSize, blockSize - 0.5, blockSize - 0.5),
+              Rect.fromLTWH(
+                c * blockSize,
+                r * blockSize,
+                blockSize - 0.5,
+                blockSize - 0.5,
+              ),
               paint,
             );
           }

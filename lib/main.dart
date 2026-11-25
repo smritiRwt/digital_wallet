@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'screens/analytics_screen.dart';
 import 'screens/cards_studio_screen.dart';
 import 'screens/home_dashboard_screen.dart';
@@ -28,7 +29,7 @@ class NexusWalletApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Nexus Digital Wallet',
+      title: 'Digital Wallet',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
       home: const MainShellScreen(),
@@ -57,10 +58,10 @@ class _MainShellScreenState extends State<MainShellScreen> {
         pageBuilder: (context, anim1, anim2) => const SendPaymentModal(),
         transitionsBuilder: (context, anim, secondaryAnim, child) {
           return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(0, 1),
-              end: Offset.zero,
-            ).animate(CurvedAnimation(parent: anim, curve: Curves.easeOutCubic)),
+            position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
+                .animate(
+                  CurvedAnimation(parent: anim, curve: Curves.easeOutCubic),
+                ),
             child: child,
           );
         },
@@ -85,10 +86,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
       body: AmbientMeshBackground(
         child: SafeArea(
           bottom: false,
-          child: IndexedStack(
-            index: _currentTabIndex,
-            children: screens,
-          ),
+          child: IndexedStack(index: _currentTabIndex, children: screens),
         ),
       ),
       bottomNavigationBar: AnimatedBottomNav(
